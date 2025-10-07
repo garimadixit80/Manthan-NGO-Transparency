@@ -10,28 +10,34 @@ import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import PublicView from "./pages/PublicView";
 import NotFound from "./pages/NotFound";
+import { useThemeStore } from "./store/useThemeStore";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<UserDashboard />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/public" element={<PublicView />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const { theme } = useThemeStore();
+  return (
+    <div className="full-screen" data-theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/dashboard" element={<UserDashboard />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/public" element={<PublicView />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </div>
+  );
+};
 
 export default App;

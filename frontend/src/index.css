@@ -6,7 +6,7 @@
 All colors MUST be HSL.
 */
 
-@layer base {
+/* @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 210 30% 15%;
@@ -108,4 +108,4 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
-}
+} */

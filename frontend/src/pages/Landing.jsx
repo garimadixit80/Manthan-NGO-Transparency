@@ -1,94 +1,124 @@
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Heart, TrendingUp, Shield, Users } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { HeartIcon, TrendingUp, Shield, Users } from "lucide-react";
+import ThemeSelector from "../components/ui/ThemeSelector";
 
 const Landing = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center gap-4">
-        <div className="flex items-center gap-2">
-          <Heart className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
-          <h1 className="text-xl sm:text-2xl font-bold text-primary">HopeTrack</h1>
+    <div className="min-h-screen bg-base-100 flex flex-col">
+      {/* Navbar */}
+      <div className="navbar bg-base-200/80 backdrop-blur-md shadow-sm">
+        <div className="navbar-start">
+          <Link to="/" className="flex items-center gap-2 px-4">
+            <HeartIcon className="h-8 w-8 text-primary" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text">
+              HopeTrack
+            </span>
+          </Link>
         </div>
-        <div className="flex gap-2 sm:gap-3">
+        <div className="navbar-end flex gap-2 px-4">
           <Link to="/auth">
-            <Button variant="outline" size="sm">
+            <button className="btn btn-outline btn-sm sm:btn-md rounded-lg hover:scale-105 transition-transform duration-200">
               Sign In
-            </Button>
+            </button>
           </Link>
           <Link to="/auth?mode=signup">
-            <Button size="sm">Get Started</Button>
+            <button className="btn btn-primary btn-sm sm:btn-md rounded-lg hover:scale-105 transition-transform duration-200">
+              Get Started
+            </button>
           </Link>
+          <ThemeSelector />
         </div>
-      </header>
+      </div>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4">
-        <section className="text-center py-12 sm:py-20 px-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-foreground">
+      <section className="hero min-h-[70vh] bg-base-100 text-center">
+        <div className="hero-content flex-col px-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-base-content">
             Tracking hopes through donations
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
-            Bridge the trust gap between donors and NGOs with complete transparency,
-            real-time tracking, and visual impact analytics.
+          </h1>
+          <p className="py-6 text-base sm:text-lg md:text-xl text-base-content/70 max-w-2xl mx-auto">
+            Bridge the trust gap between donors and NGOs with complete
+            transparency, real-time tracking, and visual impact analytics.
           </p>
           <Link to="/auth?mode=signup">
-            <Button size="lg" className="text-base sm:text-lg px-6 sm:px-8">
+            <button className="btn btn-primary btn-lg rounded-xl hover:scale-105 transition-transform duration-200">
               Start Tracking Impact
-            </Button>
+            </button>
           </Link>
-        </section>
+        </div>
+      </section>
 
-        {/* Features Section */}
-        <section className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 py-8 sm:py-16 px-4">
-          <Card className="p-4 sm:p-6 text-center hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <TrendingUp className="h-6 w-6 text-primary" />
+      {/* Features Section */}
+      <section className="py-16 bg-base-200">
+        <div className="container mx-auto grid sm:grid-cols-2 md:grid-cols-3 gap-8 px-6">
+          {/* Feature 1 */}
+          <div className="card bg-base-100 shadow-md hover:shadow-xl transition rounded-xl">
+            <div className="card-body text-center">
+              <div className="avatar placeholder mb-4">
+                <div className="bg-primary/10 text-primary rounded-full w-14 h-14 flex items-center justify-center mx-auto bg-blue-400">
+                  <TrendingUp className="h-6 w-6 text-black" />
+                </div>
+              </div>
+              <h2 className="card-title justify-center text-xl font-semibold">
+                Track Your Impact
+              </h2>
+              <p className="text-base-content/70 text-sm sm:text-base">
+                See exactly where your donations go with real-time analytics and
+                visual reports.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Track Your Impact</h3>
-            <p className="text-muted-foreground">
-              See exactly where your donations go with real-time analytics and visual reports.
-            </p>
-          </Card>
+          </div>
 
-          <Card className="p-6 text-center hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Shield className="h-6 w-6 text-secondary" />
+          {/* Feature 2 */}
+          <div className="card bg-base-100 shadow-md hover:shadow-xl transition rounded-xl">
+            <div className="card-body text-center">
+              <div className="avatar placeholder mb-4">
+                <div className="bg-secondary/10 text-secondary rounded-full w-14 h-14 flex items-center justify-center mx-auto bg-orange-400">
+                  <Shield className="h-6 w-6 text-black" />
+                </div>
+              </div>
+              <h2 className="card-title justify-center text-xl font-semibold">
+                Full Transparency
+              </h2>
+              <p className="text-base-content/70 text-sm sm:text-base">
+                NGOs share their expenditure data, building trust through
+                openness and accountability.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Full Transparency</h3>
-            <p className="text-muted-foreground">
-              NGOs share their expenditure data, building trust through openness and accountability.
-            </p>
-          </Card>
+          </div>
 
-          <Card className="p-6 text-center hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Users className="h-6 w-6 text-accent" />
+          {/* Feature 3 */}
+          <div className="card bg-base-100 shadow-md hover:shadow-xl transition rounded-xl">
+            <div className="card-body text-center">
+              <div className="avatar placeholder mb-4">
+                <div className="bg-accent/10 text-accent rounded-full w-14 h-14 flex items-center justify-center mx-auto bg-red-400">
+                  <Users className="h-6 w-6 text-black" />
+                </div>
+              </div>
+              <h2 className="card-title justify-center text-xl font-semibold">
+                Community Impact
+              </h2>
+              <p className="text-base-content/70 text-sm sm:text-base">
+                Join a community of donors making measurable differences in
+                causes that matter.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Community Impact</h3>
-            <p className="text-muted-foreground">
-              Join a community of donors making measurable differences in causes that matter.
-            </p>
-          </Card>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        {/* Public Analytics Section */}
-        <section className="py-16 text-center">
-          <Link to="/public">
-            <Button variant="outline" size="lg">
-              View Public Analytics
-            </Button>
-          </Link>
-        </section>
-      </main>
+      {/* Public Analytics Section */}
+      <section className="text-center py-16">
+        <Link to="/public">
+          <button className="btn btn-outline btn-lg rounded-xl hover:scale-105 transition-transform duration-200">
+            View Public Analytics
+          </button>
+        </Link>
+      </section>
 
       {/* Footer */}
-      <footer className="border-t mt-20">
-        <div className="container mx-auto px-4 py-8 text-center text-muted-foreground">
-          <p>&copy; 2025 HopeTrack. Tracking hopes through donations.</p>
-        </div>
+      <footer className="footer footer-center p-6 bg-base-200 text-base-content/70">
+        <p>© 2025 HopeTrack — Tracking hopes through donations.</p>
       </footer>
     </div>
   );
