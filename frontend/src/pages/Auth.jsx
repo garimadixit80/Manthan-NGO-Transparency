@@ -141,11 +141,13 @@ const Auth = () => {
           ) : (
             <form onSubmit={handleSignUp} className="space-y-4">
               <div>
-                <Label htmlFor="signup-name">Name</Label>
+                <Label htmlFor="signup-name">
+                  {userType === "admin" ? "Organization Name" : "Full Name"}
+                </Label>
                 <Input
                   id="signup-name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder={userType === "admin" ? "NGO Name" : "John Doe"}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
