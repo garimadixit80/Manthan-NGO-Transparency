@@ -36,10 +36,15 @@ export const registerAdmin = async (req, res) => {
 
   try {
     const exists = await Admin.findOne({ email });
-    if (exists) return res.status(400).json({ message: "Admin already exists" });
+    if (exists)
+      return res.status(400).json({ message: "Admin already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const admin = await Admin.create({ organization, email, password: hashedPassword });
+    const admin = await Admin.create({
+      organization,
+      email,
+      password: hashedPassword,
+    });
 
     res.json({
       _id: admin._id,
@@ -64,7 +69,8 @@ export const loginUser = async (req, res) => {
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid credentials" });
 
     res.json({
       _id: user._id,
@@ -89,7 +95,8 @@ export const loginAdmin = async (req, res) => {
     if (!admin) return res.status(400).json({ message: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid credentials" });
 
     res.json({
       _id: admin._id,
