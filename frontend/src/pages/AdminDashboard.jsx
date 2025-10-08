@@ -1,210 +1,3 @@
-// import React, { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useAuth } from "@/contexts/AuthContext";
-// import { Button } from "@/components/ui/button";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { Heart, LogOut } from "lucide-react";
-// import { mockNGOs, mockDonations } from "@/lib/mockData";
-// import {
-//   ChartContainer,
-//   ChartTooltip,
-//   ChartTooltipContent,
-// } from "@/components/ui/chart";
-// import {
-//   PieChart,
-//   Pie,
-//   Cell,
-//   ResponsiveContainer,
-//   BarChart,
-//   Bar,
-//   XAxis,
-//   YAxis,
-//   CartesianGrid,
-// } from "recharts";
-// import ThemeSelector from "../components/ui/ThemeSelector";
-
-// const AdminDashboard = () => {
-//   const { user, logout } = useAuth();
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     if (!user || user.role !== "admin") {
-//       navigate("/auth");
-//     }
-//   }, [user, navigate]);
-
-//   if (!user) return null;
-
-//   const ngo = mockNGOs[0];
-//   const ngoDonations = mockDonations.filter((d) => d.ngoId === ngo.id);
-
-//   const allocationData = [
-//     { name: "Necessities", value: ngo.necessitiesPercent },
-//     { name: "Miscellaneous", value: ngo.miscPercent },
-//   ];
-
-//   const COLORS = ["hsl(var(--chart-2))", "hsl(var(--chart-3))"];
-
-//   return (
-//     <div className="min-h-screen bg-background">
-//       <header className="border-b">
-//         <div className="container mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
-//           <div className="flex items-center gap-2">
-//             <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-//             <h1 className="text-lg sm:text-xl font-bold text-primary">
-//               HopeTrack Admin
-//             </h1>
-//           </div>
-//           <div className="flex items-center gap-2 sm:gap-4">
-//             <span className="text-xs sm:text-sm text-muted-foreground hidden sm:inline">
-//               {ngo.name}
-//             </span>
-//             <Button variant="outline" size="sm" onClick={logout}>
-//               <LogOut className="h-4 w-4 sm:mr-2" />
-//               <span className="hidden sm:inline">Logout</span>
-//             </Button>
-//             <ThemeSelector />
-//           </div>
-//         </div>
-//       </header>
-
-//       <main className="container mx-auto px-4 py-4 sm:py-8">
-//         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 md:grid-cols-3 mb-6 sm:mb-8">
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Total Received</CardTitle>
-//             </CardHeader>
-//             <CardContent>
-//               <p className="text-3xl font-bold text-primary">
-//                 ₹{ngo.totalReceived.toLocaleString()}
-//               </p>
-//             </CardContent>
-//           </Card>
-
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Necessities</CardTitle>
-//             </CardHeader>
-//             <CardContent>
-//               <p className="text-3xl font-bold text-secondary">
-//                 {ngo.necessitiesPercent}%
-//               </p>
-//             </CardContent>
-//           </Card>
-
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Total Donors</CardTitle>
-//             </CardHeader>
-//             <CardContent>
-//               <p className="text-3xl font-bold text-accent">
-//                 {new Set(ngoDonations.map((d) => d.userId)).size}
-//               </p>
-//             </CardContent>
-//           </Card>
-//         </div>
-
-//         <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 mb-6 sm:mb-8">
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Fund Allocation</CardTitle>
-//             </CardHeader>
-//             <CardContent>
-//               <ChartContainer
-//                 config={{ value: { label: "Percentage" } }}
-//                 className="h-[300px]"
-//               >
-//                 <ResponsiveContainer width="100%" height="100%">
-//                   <PieChart>
-//                     <Pie
-//                       data={allocationData}
-//                       cx="50%"
-//                       cy="50%"
-//                       labelLine={false}
-//                       label={({ name, value }) => `${name}: ${value}%`}
-//                       outerRadius={80}
-//                       fill="#8884d8"
-//                       dataKey="value"
-//                     >
-//                       {allocationData.map((entry, index) => (
-//                         <Cell
-//                           key={`cell-${index}`}
-//                           fill={COLORS[index % COLORS.length]}
-//                         />
-//                       ))}
-//                     </Pie>
-//                     <ChartTooltip content={<ChartTooltipContent />} />
-//                   </PieChart>
-//                 </ResponsiveContainer>
-//               </ChartContainer>
-//             </CardContent>
-//           </Card>
-
-//           <Card>
-//             <CardHeader>
-//               <CardTitle>Expenditure by Category</CardTitle>
-//             </CardHeader>
-//             <CardContent>
-//               <ChartContainer
-//                 config={{
-//                   amount: { label: "Amount", color: "hsl(var(--chart-1))" },
-//                 }}
-//                 className="h-[300px]"
-//               >
-//                 <ResponsiveContainer width="100%" height="100%">
-//                   <BarChart data={ngo.categories}>
-//                     <CartesianGrid strokeDasharray="3 3" />
-//                     <XAxis dataKey="name" />
-//                     <YAxis />
-//                     <ChartTooltip content={<ChartTooltipContent />} />
-//                     <Bar dataKey="amount" fill="hsl(var(--chart-1))" />
-//                   </BarChart>
-//                 </ResponsiveContainer>
-//               </ChartContainer>
-//             </CardContent>
-//           </Card>
-//         </div>
-
-//         <Card>
-//           <CardHeader>
-//             <CardTitle>Recent Donations</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             <div className="space-y-3">
-//               {ngoDonations.slice(0, 5).map((donation) => (
-//                 <div
-//                   key={donation.id}
-//                   className="flex flex-col sm:flex-row justify-between sm:items-center p-3 sm:p-4 border rounded-lg gap-2"
-//                 >
-//                   <div>
-//                     <p className="font-semibold text-sm sm:text-base">
-//                       Donation #{donation.id}
-//                     </p>
-//                     <p className="text-xs sm:text-sm text-muted-foreground">
-//                       {donation.category}
-//                     </p>
-//                   </div>
-//                   <div className="sm:text-right">
-//                     <p className="font-bold text-primary text-sm sm:text-base">
-//                       ₹{donation.amount.toLocaleString()}
-//                     </p>
-//                     <p className="text-xs sm:text-sm text-muted-foreground">
-//                       {donation.date}
-//                     </p>
-//                   </div>
-//                 </div>
-//               ))}
-//             </div>
-//           </CardContent>
-//         </Card>
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default AdminDashboard;
-
-// AdminDashboard.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -212,22 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, LogOut } from "lucide-react";
 import { mockNGOs, mockDonations } from "@/lib/mockData";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-} from "recharts";
+import Chart from "react-apexcharts";
 import ThemeSelector from "../components/ui/ThemeSelector";
 
 const AdminDashboard = () => {
@@ -251,10 +29,59 @@ const AdminDashboard = () => {
     { name: "Miscellaneous", value: ngo.miscPercent },
   ];
 
-  // Theme-based colors
-  const pieColors =
-    theme === "dark" ? ["#facc15", "#38bdf8"] : ["#3b82f6", "#9333ea"];
-  const barColor = theme === "dark" ? "#f472b6" : "#f97316";
+  const categories = ngo.categories;
+
+  const chartColors =
+    theme === "dark"
+      ? ["#facc15", "#38bdf8", "#f472b6"]
+      : ["#3b82f6", "#9333ea", "#f97316"];
+
+  // ApexCharts options
+  const allocationChartOptions = {
+    chart: {
+      type: "donut",
+      toolbar: { show: false },
+      background: "transparent",
+    },
+    labels: allocationData.map((d) => d.name),
+    colors: chartColors,
+    legend: {
+      position: "bottom",
+      labels: { colors: theme === "dark" ? "#fff" : "#000" },
+    },
+    dataLabels: { enabled: true, style: { colors: ["#fff"] } },
+    theme: { mode: theme },
+  };
+  const allocationChartSeries = allocationData.map((d) => d.value);
+
+  const expenditureChartOptions = {
+    chart: { type: "bar", toolbar: { show: false }, background: "transparent" },
+    plotOptions: {
+      bar: { distributed: true, borderRadius: 6, horizontal: false },
+    },
+    colors: chartColors,
+    xaxis: {
+      categories: categories.map((c) => c.name),
+      labels: {
+        style: {
+          colors: Array(categories.length).fill(
+            theme === "dark" ? "#fff" : "#000"
+          ),
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        formatter: (val) => `₹${val.toLocaleString()}`,
+        style: { colors: [theme === "dark" ? "#fff" : "#000"] },
+      },
+    },
+    dataLabels: { enabled: true },
+    theme: { mode: theme },
+  };
+  const expenditureChartSeries = [
+    { name: "Amount", data: categories.map((c) => c.amount) },
+  ];
 
   return (
     <div
@@ -286,34 +113,40 @@ const AdminDashboard = () => {
       <main className="container mx-auto px-4 py-4 sm:py-8">
         {/* Stats */}
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 md:grid-cols-3 mb-6 sm:mb-8">
-          <Card>
+          <Card
+            className={`bg-base-100 dark:bg-gray-800 border-none rounded-xl hover:shadow-xl transition`}
+          >
             <CardHeader>
               <CardTitle>Total Received</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold text-primary">
+              <p className="text-3xl font-bold text-primary dark:text-white">
                 ₹{ngo.totalReceived.toLocaleString()}
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card
+            className={`bg-base-100 dark:bg-gray-800 border-none rounded-xl hover:shadow-xl transition`}
+          >
             <CardHeader>
               <CardTitle>Necessities</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold text-secondary">
+              <p className="text-3xl font-bold text-secondary dark:text-white">
                 {ngo.necessitiesPercent}%
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card
+            className={`bg-base-100 dark:bg-gray-800 border-none rounded-xl hover:shadow-xl transition`}
+          >
             <CardHeader>
               <CardTitle>Total Donors</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold text-accent">
+              <p className="text-3xl font-bold text-accent dark:text-white">
                 {new Set(ngoDonations.map((d) => d.userId)).size}
               </p>
             </CardContent>
@@ -322,67 +155,43 @@ const AdminDashboard = () => {
 
         {/* Charts */}
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 mb-6 sm:mb-8">
-          {/* Fund Allocation Pie Chart */}
-          <Card>
+          <Card
+            className={`bg-base-100 dark:bg-gray-800 border-none rounded-xl hover:shadow-xl transition`}
+          >
             <CardHeader>
               <CardTitle>Fund Allocation</CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer
-                config={{ value: { label: "Percentage" } }}
-                className="h-[300px]"
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={allocationData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, value }) => `${name}: ${value}%`}
-                      outerRadius={80}
-                      dataKey="value"
-                    >
-                      {allocationData.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={pieColors[index % pieColors.length]}
-                        />
-                      ))}
-                    </Pie>
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </ChartContainer>
+              <Chart
+                options={allocationChartOptions}
+                series={allocationChartSeries}
+                type="donut"
+                height={300}
+              />
             </CardContent>
           </Card>
 
-          {/* Expenditure Bar Chart */}
-          <Card>
+          <Card
+            className={`bg-base-100 dark:bg-gray-800 border-none rounded-xl hover:shadow-xl transition`}
+          >
             <CardHeader>
               <CardTitle>Expenditure by Category</CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer
-                config={{ amount: { label: "Amount", color: barColor } }}
-                className="h-[300px]"
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={ngo.categories}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar dataKey="amount" fill={barColor} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </ChartContainer>
+              <Chart
+                options={expenditureChartOptions}
+                series={expenditureChartSeries}
+                type="bar"
+                height={300}
+              />
             </CardContent>
           </Card>
         </div>
 
         {/* Recent Donations */}
-        <Card>
+        <Card
+          className={`bg-base-100 dark:bg-gray-800 border-none rounded-xl hover:shadow-xl transition`}
+        >
           <CardHeader>
             <CardTitle>Recent Donations</CardTitle>
           </CardHeader>
@@ -391,21 +200,21 @@ const AdminDashboard = () => {
               {ngoDonations.slice(0, 5).map((donation) => (
                 <div
                   key={donation.id}
-                  className="flex flex-col sm:flex-row justify-between sm:items-center p-3 sm:p-4 border rounded-lg gap-2"
+                  className="flex flex-col sm:flex-row justify-between sm:items-center p-3 rounded-lg bg-base-200 dark:bg-gray-700"
                 >
                   <div>
-                    <p className="font-semibold text-sm sm:text-base">
+                    <p className="font-semibold text-sm sm:text-base dark:text-white">
                       Donation #{donation.id}
                     </p>
-                    <p className="text-xs sm:text-sm text-muted-foreground">
+                    <p className="text-xs sm:text-sm text-muted-foreground dark:text-gray-300">
                       {donation.category}
                     </p>
                   </div>
                   <div className="sm:text-right">
-                    <p className="font-bold text-primary text-sm sm:text-base">
+                    <p className="font-bold text-primary dark:text-white text-sm sm:text-base">
                       ₹{donation.amount.toLocaleString()}
                     </p>
-                    <p className="text-xs sm:text-sm text-muted-foreground">
+                    <p className="text-xs sm:text-sm text-muted-foreground dark:text-gray-300">
                       {donation.date}
                     </p>
                   </div>
