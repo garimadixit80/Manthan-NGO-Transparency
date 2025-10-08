@@ -6,7 +6,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-base-100 flex flex-col">
       {/* Navbar */}
-      <div className="navbar bg-base-200/80 backdrop-blur-md shadow-sm sticky top-0">
+      <div className="navbar bg-base-100 backdrop-blur-md shadow-lg sticky top-0 z-50">
         <div className="navbar-start">
           <Link to="/" className="flex items-center gap-2 px-4">
             <HeartIcon className="h-8 w-8 text-primary" />
