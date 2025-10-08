@@ -17,12 +17,12 @@ const Landing = () => {
         </div>
         <div className="navbar-end flex gap-2 px-4">
           <Link to="/auth">
-            <button className="btn btn-outline btn-sm sm:btn-md rounded-lg hover:scale-105 transition-transform duration-200">
+            <button className="btn btn-outline btn-sm sm:btn-md hover:scale-105 transition-transform duration-200 rounded-btn">
               Sign In
             </button>
           </Link>
           <Link to="/auth?mode=signup">
-            <button className="btn btn-primary btn-sm sm:btn-md rounded-lg hover:scale-105 transition-transform duration-200">
+            <button className="btn btn-primary btn-sm sm:btn-md rounded-btn hover:scale-105 transition-transform duration-200">
               Get Started
             </button>
           </Link>
@@ -55,7 +55,7 @@ const Landing = () => {
           <div className="card bg-base-100 shadow-md hover:shadow-xl transition rounded-xl">
             <div className="card-body text-center">
               <div className="avatar placeholder mb-4">
-                <div className="bg-primary/10 text-primary rounded-full w-14 h-14 flex items-center justify-center mx-auto bg-blue-300">
+                <div className="bg-accent/10 text-primary rounded-full w-14 h-14 flex items-center justify-center mx-auto bg-blue-300">
                   <TrendingUp className="h-6 w-6 text-black" />
                 </div>
               </div>
@@ -73,7 +73,7 @@ const Landing = () => {
           <div className="card bg-base-100 shadow-md hover:shadow-xl transition rounded-xl">
             <div className="card-body text-center">
               <div className="avatar placeholder mb-4">
-                <div className="bg-secondary/10 text-secondary rounded-full w-14 h-14 flex items-center justify-center mx-auto bg-orange-300">
+                <div className="bg-accent/10 text-secondary rounded-full w-14 h-14 flex items-center justify-center mx-auto bg-orange-300">
                   <Shield className="h-6 w-6 text-black" />
                 </div>
               </div>
